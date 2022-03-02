@@ -1,0 +1,27 @@
+html {
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    display: block;
+    width: 900px;
+    margin: 0 auto;
+}
+
+.nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.nav a {
+    font-size: 24px;
+    text-decoration: none;
+    color: black;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+
+
+
