@@ -2,6 +2,10 @@ html {
     font-family: 'Roboto', sans-serif;
 }
 
+body {
+    margin: 0;
+}
+
 .container {
     display: block;
     width: 900px;
@@ -22,6 +26,21 @@ html {
     font-weight: bold;
 }
 
+.main {
+    display: flex;
+}
+
+.leftbar {
+    width: 15%;
+    background-color: darkcyan;
+    height: 100vh;
+}
+
+.rightbar {
+    width: 85%;
+    background-color: olive;
+    height: 100vh;
+}
 
 
 
