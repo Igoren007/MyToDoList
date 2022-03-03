@@ -5,3 +5,15 @@ from django.http import HttpResponse
 
 def index(request):
     return render(request, 'ToDo/index.html')
+
+
+def login(request):
+    return render(request, 'ToDo/login.html')
+
+
+def register(request):
+    return render(request, 'ToDo/register.html')
+
+
+def home(request):
+    return render(request, 'ToDo/home.html')

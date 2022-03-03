@@ -32,7 +32,7 @@ body {
 
 .leftbar {
     width: 15%;
-    background-color: darkcyan;
+    background-color: #484848;
     height: 100vh;
 }
 
@@ -43,4 +43,15 @@ body {
 }
 
 
+a {
+    font-size: 24px;
+    text-decoration: none;
+}
+
+.login__wrapper {
+    display: flex;
+    margin-top: 30vh;
+    justify-content: center; /*Центрирование по горизонтали*/
+    align-items: center;     /*Центрирование по вертикали */
+}
 
