@@ -4,8 +4,14 @@
 
 <div class="container">
     <h1>Страница авторизации</h1>
-    <div class="login">
-
-    </div>
+        <form method="post">
+        {% csrf_token %}
+        <div class="form-error">{{ form.non_field_errors }}</div>
+        {% for f in form %}
+            <p><label class="form-label" for="{{ f.id_for_laber }}">{{ f.label }}</label>{{ f }}</p>
+            <div class="form-error">{{ f.errors }}</div>
+        {% endfor %}
+        <button type="submit">Войти</button>
+    </form>
 </div>
 {% endblock %}

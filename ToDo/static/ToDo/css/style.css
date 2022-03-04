@@ -55,3 +55,8 @@ a {
     align-items: center;     /*Центрирование по вертикали */
 }
 
+.register_form {
+    display: block;
+    margin: 0 auto;
+}
+

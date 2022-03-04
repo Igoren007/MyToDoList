@@ -1,21 +1,27 @@
-from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render
+from django.contrib.auth import logout, login
+from django.contrib.auth.views import LoginView
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from ToDo.forms import RegisterUserForm
+from ToDo.forms import RegisterUserForm, LoginUserForm
 
 
 def index(request):
     return render(request, 'ToDo/index.html')
 
 
-def login(request):
-    return render(request, 'ToDo/login.html')
+# def login(request):
+#     return render(request, 'ToDo/login.html')
 
 
-def register(request):
-    return render(request, 'ToDo/register.html')
+# def register(request):
+#     return render(request, 'ToDo/register.html')
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')
 
 
 def home(request):
@@ -29,7 +35,17 @@ class RegisterUser(CreateView):
     # куда перенаправляем при успешной регистрации
     success_url = reverse_lazy('login')
 
-    # def get_context_data(self, *, object_list=None, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     c_def = self.get_user_context(title="Регистрация")
-    #     return dict(list(context.items()) + list(c_def.items()))
+
+    #при успешной регистрации сразу авторизовываемся
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('home')
+
+
+class LoginUser(LoginView):
+    form_class = LoginUserForm
+    template_name = 'ToDo/login.html'
+
+    def get_success_url(self):
+        return reverse_lazy('home')
