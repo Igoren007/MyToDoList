@@ -2,17 +2,18 @@
 
 {% block content %}
 
-<div class="container">
-    <h1>Страница регистрации</h1>
-    <form method="post">
-        {% csrf_token %}
-        <div class="register_form">
-            {% for f in form %}
-                <p><label class="form-label" for="{{ f.id_for_laber }}">{{ f.label }}</label>{{ f }}</p>
-                <div class="form-error">{{ f.errors }}</div>
-            {% endfor %}
-            <button type="submit">Регистрация</button>
+    <div class="login-page">
+        <div class="form">
+            <form class="login-form"  method="post">
+                {% csrf_token %}
+                <div class="form-error">{{ form.non_field_errors }}</div>
+                {% for f in form %}
+                    {{ f }}
+                {% endfor %}
+                <button>Зарегистрироваться</button>
+                <p class="message">Уже зарегистрированы? <a href="{% url 'login' %}">Войти</a></p>
+            </form>
         </div>
-    </form>
-</div>
+    </div>
+
 {% endblock %}

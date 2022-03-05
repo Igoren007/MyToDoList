@@ -2,14 +2,14 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django import forms
 
-
+# представляет форму регистрации
 class RegisterUserForm(UserCreationForm):
-    username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
-    email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'form-input'}))
-    first_name = forms.CharField(label='Имя', widget=forms.TextInput(attrs={'class': 'form-input'}))
-    last_name = forms.CharField(label='Фамилия', widget=forms.TextInput(attrs={'class': 'form-input'}))
-    password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
-    password2 = forms.CharField(label='Повтор пароля', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Имя пользователя'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Имя'}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Фамилия'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Пароль'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Повтор пароля'}))
 
     class Meta:
         model = User
@@ -18,5 +18,5 @@ class RegisterUserForm(UserCreationForm):
 
 # представляет форму авторизации
 class LoginUserForm(AuthenticationForm):
-    username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Логин'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Пароль'}))
