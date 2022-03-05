@@ -7,6 +7,12 @@ from django.views.generic import CreateView
 from ToDo.forms import RegisterUserForm, LoginUserForm
 
 
+home_menu = {'current': 'Текущие',
+             'done': 'Законченные',
+             'all': 'Все задачи'
+             }
+
+
 def index(request):
     return render(request, 'ToDo/index.html')
 
@@ -25,7 +31,7 @@ def logout_user(request):
 
 
 def home(request):
-    return render(request, 'ToDo/home.html')
+    return render(request, 'ToDo/home.html', {'menu': home_menu})
 
 
 class RegisterUser(CreateView):
