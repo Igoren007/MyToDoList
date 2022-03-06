@@ -13,7 +13,15 @@
         </div>
     </div>
     <div  class="rightbar">
-        <img src="{{ user.avatar }}" alt="avatar">
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in user_edit_form %}
+            <p>{{ field }}<p>
+            {% endfor%}
+            <input type="submit" class="fadeIn fourth" value="Save">
+        </form>
+
         <div class="home_nav">
             <div class="home_info">
                     {% if request.user.is_authenticated %}
