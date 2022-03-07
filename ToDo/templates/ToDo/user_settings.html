@@ -1,36 +1,13 @@
-{% extends 'ToDo/base.html' %}
-{% block content %}
+{% extends 'ToDo/home_base.html' %}
 
-<div class="main">
-    <div  class="leftbar">
-        <ul class="home_menu">
-            {% for key, item in menu.items %}
-                <li class="home_menu__item"><a href="#">{{ item }}</a></li>
-            {% endfor %}
-        </ul>
-        <div class="settings">
-            <a href="{% url 'user_settings' %}">Настройки</a>
-        </div>
-    </div>
-    <div  class="rightbar">
+{% block rightbar %}
 
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {% for field in user_edit_form %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in user_edit_form %}
             <p>{{ field }}<p>
-            {% endfor%}
-            <input type="submit" class="fadeIn fourth" value="Save">
-        </form>
-
-        <div class="home_nav">
-            <div class="home_info">
-                    {% if request.user.is_authenticated %}
-                    <span>{{ user.first_name }} {{ user.last_name }}</span>
-                    <a href="{% url 'logout' %}">Выйти</a>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</div>
+        {% endfor%}
+        <input type="submit" class="fadeIn fourth" value="Сохранить">
+    </form>
 
 {% endblock %}

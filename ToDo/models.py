@@ -8,7 +8,7 @@ class CustomUser(AbstractUser):
     avatar = models.ImageField(
         blank=True,
         verbose_name='Avatar',
-        upload_to=f'media/',
+        upload_to=f'images/',
         default='../static/ToDo/images/default.png'
     )
     date_of_birth = models.DateField(blank=True, null=True)
