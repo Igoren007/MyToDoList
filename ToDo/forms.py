@@ -7,6 +7,9 @@ from ToDo.models import CustomUser
 
 
 class RegisterCustomUserForm(UserCreationForm):
+    """
+        Форма для регистрации аккаунта пользователя
+        """
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Имя пользователя'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
     first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Имя'}))
