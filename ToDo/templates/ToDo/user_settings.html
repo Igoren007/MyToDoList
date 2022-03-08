@@ -1,13 +1,18 @@
 {% extends 'ToDo/home_base.html' %}
 
 {% block rightbar %}
-
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% for field in user_edit_form %}
-            <p>{{ field }}<p>
-        {% endfor%}
-        <input type="submit" class="fadeIn fourth" value="Сохранить">
-    </form>
-
+    <div class="user_settings__wrap">
+        <div class="user_settings__avatar">
+            <img src="{{ user.avatar.url }}" alt="avatar">
+        </div>
+        <div class="user_settings__data">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in user_edit_form %}
+                    <div>{{ field }}</div>
+                {% endfor%}
+                <input type="submit" class="fadeIn fourth" value="Сохранить">
+            </form>
+        </div>
+    </div>
 {% endblock %}

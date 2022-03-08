@@ -9,7 +9,8 @@ from ToDo.forms import LoginCustomUserForm, RegisterCustomUserForm, CustomUserEd
 
 home_menu = {'current': 'Текущие',
              'done': 'Законченные',
-             'all': 'Все задачи'
+             'all': 'Все задачи',
+             'statistic': 'Статистика'
              }
 
 

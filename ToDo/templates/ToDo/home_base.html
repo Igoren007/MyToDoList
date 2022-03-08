@@ -7,9 +7,6 @@
                     <li class="home_menu__item"><a href="#">{{ item }}</a></li>
                 {% endfor %}
             </ul>
-            <div class="settings">
-                <a href="{% url 'user_settings' %}">Настройки</a>
-            </div>
         </div>
 
         <div  class="rightbar">
@@ -17,6 +14,7 @@
                 <div class="home_info">
                         {% if request.user.is_authenticated %}
                         <span>{{ user.first_name }} {{ user.last_name }}</span>
+                        <a href="{% url 'user_settings' %}">Настройки</a>
                         <a href="{% url 'logout' %}">Выйти</a>
                     {% endif %}
                 </div>

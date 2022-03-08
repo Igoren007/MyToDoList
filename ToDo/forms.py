@@ -34,14 +34,14 @@ class CustomUserEditForm(UserChangeForm):
     """
     avatar = forms.ImageField(required=False,
                               widget=forms.FileInput(attrs={
-                                  'class': 'fadeIn second',
+                                  'class': 'user_settings__input',
                                   'placeholder': 'Avatar',
                               }))
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'fadeIn second'}))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'fadeIn second'}))
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'fadeIn second'}))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'fadeIn second'}))
-    date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'class': 'fadeIn second'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'user_settings__input'}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
+    date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'class': 'user_settings__input'}))
 
     class Meta:
         model = CustomUser

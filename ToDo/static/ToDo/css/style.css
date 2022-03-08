@@ -135,3 +135,34 @@ body {
 .form .register-form {
   display: none;
 }
+
+.user_settings__wrap {
+    display: flex;
+    padding: 20px 30px 20px 30px;
+}
+
+.user_settings__avatar {
+    display: block;
+}
+
+.user_settings__avatar img {
+    height: 150px;
+    width: 120px;
+}
+
+.user_settings__data {
+    display: block;
+    margin-left: 50px;
+}
+
+.user_settings__input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 200px;
+  margin: 0 0 5px;
+  padding: 5px;
+  box-sizing: border-box;
+  font-size: 14px;
+    border: 1px solid dimgrey;
+}
