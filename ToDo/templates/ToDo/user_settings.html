@@ -1,14 +1,18 @@
 {% extends 'ToDo/home_base.html' %}
 
 {% block rightbar %}
+    <div class="user_settings__title">Изменить профиль</div>
     <div class="user_settings__wrap">
+
         <div class="user_settings__avatar">
             <img src="{{ user.avatar.url }}" alt="avatar">
         </div>
+
         <div class="user_settings__data">
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% for field in user_edit_form %}
+                    <div>{{ field.label }}</div>
                     <div>{{ field }}</div>
                 {% endfor%}
                 <input type="submit" class="fadeIn fourth" value="Сохранить">

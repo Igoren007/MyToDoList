@@ -28,20 +28,20 @@ class LoginCustomUserForm(AuthenticationForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Пароль'}))
 
 
-class CustomUserEditForm(UserChangeForm):
+class CustomUserEditForm(forms.ModelForm):
     """
     Форма для редактирования аккаунта пользователя
     """
     avatar = forms.ImageField(required=False,
+                              label='Сменить аватар',
                               widget=forms.FileInput(attrs={
-                                  'class': 'user_settings__input',
-                                  'placeholder': 'Avatar',
+                                  'class': 'user_settings__input'
                               }))
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'user_settings__input'}))
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
-    date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'class': 'user_settings__input'}))
+    username = forms.CharField(label='Имя пользователя', widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
+    email = forms.EmailField(label='Эл. почта', widget=forms.EmailInput(attrs={'class': 'user_settings__input'}))
+    first_name = forms.CharField(label='Имя', widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
+    last_name = forms.CharField(label='Фамилия', widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
+    date_of_birth = forms.DateField(label='Дата рождения', widget=forms.DateInput(attrs={'class': 'user_settings__input'}))
 
     class Meta:
         model = CustomUser

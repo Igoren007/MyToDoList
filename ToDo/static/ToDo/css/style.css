@@ -40,6 +40,18 @@ body {
 .settings {
     align-self: flex-end;
 }
+
+.settings__icon {
+    width: 30px;
+    height: 30px;
+}
+
+.user_settings__title {
+    display: block;
+    margin-left: 40px;
+    font-size: 24px;
+}
+
 .home_menu {
     display: flex;
     flex-direction: column;
@@ -147,7 +159,7 @@ body {
 
 .user_settings__avatar img {
     height: 150px;
-    width: 120px;
+    width: 130px;
 }
 
 .user_settings__data {
@@ -163,6 +175,5 @@ body {
   margin: 0 0 5px;
   padding: 5px;
   box-sizing: border-box;
-  font-size: 14px;
-    border: 1px solid dimgrey;
+  font-size: 14px;border: 1px solid dimgrey;
 }
