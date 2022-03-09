@@ -5,7 +5,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView
 
-from ToDo.forms import LoginCustomUserForm, RegisterCustomUserForm, CustomUserEditForm
+from ToDo.forms import LoginCustomUserForm, RegisterCustomUserForm, CustomUserEditForm, TaskCreateForm
+from ToDo.models import Task
 
 home_menu = {'current': 'Текущие',
              'done': 'Законченные',
@@ -32,7 +33,25 @@ def logout_user(request):
 
 
 def create_task(request):
-    return render(request, 'ToDo/create_task.html', {'menu': home_menu})
+    """
+        Создание новой задачи
+    """
+    if request.POST:
+        task_create_form = TaskCreateForm(request.POST, instance=request.user)
+        if task_create_form.is_valid():
+            #task_create_form.instance.user_id = request.user.id
+            #task_create_form.save()
+            title = request.POST['title']
+            descr = request.POST['descr']
+            priority = request.POST['priority']
+            print(title, descr, priority)
+            Task.objects.create(title=title, descr=descr, priority=priority)
+            print('after save')
+            return redirect('home')
+    else:
+        task_create_form = TaskCreateForm(instance=request.user)
+        print('else')
+    return render(request, 'ToDo/create_task.html', {'task_create_form': task_create_form, 'menu': home_menu})
 
 @login_required
 def home(request):
@@ -74,3 +93,12 @@ class LoginUser(LoginView):
 
     def get_success_url(self):
         return reverse_lazy('home')
+
+# class TaskCreate(CreateView):
+#     form_class = TaskCreateForm
+#     template_name = 'ToDo/create_task.html'
+#     success_url = reverse_lazy('home')
+#
+#     def form_valid(self, form):
+#         form.instance.user_id = self.request.user.id
+#         return super(TaskCreate, self).form_valid(form)

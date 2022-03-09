@@ -2,5 +2,14 @@
 
 {% block rightbar %}
 создать новую задачу
+    <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+    <div class="form-error">{{ task_create_form.non_field_errors }}</div>
+                {% for field in task_create_form %}
+                    <div>{{ field.label }}</div>
+                    <div>{{ field }}</div>
+                {% endfor%}
+                <input type="submit" class="fadeIn fourth" value="Содать">
+            </form>
 
 {% endblock %}
