@@ -30,6 +30,10 @@ def logout_user(request):
     logout(request)
     return redirect('login')
 
+
+def create_task(request):
+    return render(request, 'ToDo/create_task.html', {'menu': home_menu})
+
 @login_required
 def home(request):
     return render(request, 'ToDo/home.html', {'menu': home_menu})
