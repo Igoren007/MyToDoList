@@ -44,9 +44,10 @@ def create_task(request):
             title = request.POST['title']
             descr = request.POST['descr']
             priority = request.POST['priority']
-            print(title, descr, priority)
-            Task.objects.create(title=title, descr=descr, priority=priority)
-            print('after save')
+            user_id = request.user.id
+            #print(title, descr, priority)
+            Task.objects.create(title=title, descr=descr, priority=priority, user_id=user_id)
+            #print('after save')
             return redirect('home')
     else:
         task_create_form = TaskCreateForm(instance=request.user)
@@ -55,7 +56,9 @@ def create_task(request):
 
 @login_required
 def home(request):
-    return render(request, 'ToDo/home.html', {'menu': home_menu})
+    tasks = Task.objects.filter(user_id=request.user.id)
+    print(tasks)
+    return render(request, 'ToDo/home.html', {'menu': home_menu, 'tasks':tasks})
 
 
 def get_user_edit(request):
