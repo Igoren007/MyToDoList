@@ -2,28 +2,43 @@
 
 {% block rightbar %}
     <a class="create__task-btn" href="{% url 'create_task' %}">Создать задачу</a>
+
     <div class="tasks__wrap">
-        <div class="tasks__active">
-            {% for task in tasks %}
-                {% if not task.is_finished %}
-                    <div class="task">
-                        <div class="task__title {{ task.priority }}">{{ task.title }}</div>
-                        <div class="task__descr">{{ task.descr }}</div>
-                        <div class="task__created_at">{{ task.created_at }}</div>
-                    </div>
-                {% endif %}
-            {% endfor %}
+        <div class="tasks__active_wrap">
+            <div class="tasks__header">
+                <div class="tasks__active_title">Актуальные задачи</div>
+                <div class="tasks__active_info">тут будет сортировка и тд</div>
+            </div>
+            <div class="tasks__active">
+                {% for task in tasks %}
+                    {% if not task.is_finished %}
+                        <div class="task">
+                            <div class="task__title {{ task.priority }}">
+                                <a class="task__edit-link" href="{% url 'task-edit' task.id %}">{{ task.title }}</a>
+                            </div>
+                            <div class="task__descr">{{ task.descr }}</div>
+                            <div class="task__created_at">{{ task.created_at }}</div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
-        <div class="tasks__completed">
-            {% for task in tasks %}
-                {% if task.is_finished %}
-                    <div class="task">
-                        <div class="task__title {{ task.priority }}">{{ task.title }}</div>
-                        <div class="task__descr">{{ task.descr }}</div>
-                        <div class="task__created_at">{{ task.created_at }}</div>
-                    </div>
-                {% endif %}
-            {% endfor %}
+
+        <div class="tasks__completed_wrap">
+            <div class="tasks__header">
+                <div class="tasks__active_title">Недавно выполненнные</div>
+            </div>
+            <div class="tasks__completed">
+                {% for task in tasks %}
+                    {% if task.is_finished %}
+                        <div class="task">
+                            <div class="task__title {{ task.priority }}">{{ task.title }}</div>
+                            <div class="task__descr">{{ task.descr }}</div>
+                            <div class="task__created_at">{{ task.created_at }}</div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
     </div>
 

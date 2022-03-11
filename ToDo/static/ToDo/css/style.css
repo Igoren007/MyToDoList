@@ -216,6 +216,31 @@ body {
     align-content: flex-start;
 }
 
+.tasks__header {
+    display: flex;
+    justify-content: flex-start;
+    background-color: #ADD8E6;
+    padding: 10px 10px;
+}
+
+.tasks__active_info {
+    margin-left: 50px;
+}
+
+.tasks__active_title{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.tasks__completed_wrap {
+    margin: 0 10px;
+}
+
+.tasks__active_wrap {
+    margin: 0 10px;
+}
+
+
 .tasks__completed {
     display: flex;
     flex-direction: column;
@@ -266,4 +291,9 @@ body {
     padding: 5px 10px;
     box-sizing: border-box;
     font-size: 14px;
+}
+
+.task__edit-link {
+    text-decoration: none;
+    color: black;
 }
