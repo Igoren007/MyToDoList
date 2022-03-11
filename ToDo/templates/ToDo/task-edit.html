@@ -1,0 +1,11 @@
+{% extends 'ToDo/home_base.html' %}
+
+{% block rightbar %}
+Изменить задачу
+    <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-error">{{ form.non_field_errors }}</div>
+                {{ form.as_p }}
+                <input type="submit" class="" value="Сохранить">
+            </form>
+{% endblock %}

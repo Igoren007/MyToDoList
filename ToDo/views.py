@@ -3,13 +3,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 
-from ToDo.forms import LoginCustomUserForm, RegisterCustomUserForm, CustomUserEditForm
+from ToDo.forms import LoginCustomUserForm, RegisterCustomUserForm, CustomUserEditForm, TaskCreateForm, TaskEditForm
+from ToDo.models import Task
 
-home_menu = {'current': 'Текущие',
-             'done': 'Законченные',
-             'all': 'Все задачи',
+home_menu = {'current': 'Главная',
+             'done': 'Выполненные',
              'statistic': 'Статистика'
              }
 
@@ -32,11 +32,39 @@ def logout_user(request):
 
 
 def create_task(request):
-    return render(request, 'ToDo/create_task.html', {'menu': home_menu})
+    """
+        Создание новой задачи
+    """
+    if request.POST:
+        task_create_form = TaskCreateForm(request.POST, instance=request.user)
+        if task_create_form.is_valid():
+            #task_create_form.instance.user_id = request.user.id
+            #task_create_form.save()
+            title = request.POST['title']
+            descr = request.POST['descr']
+            priority = request.POST['priority']
+            user_id = request.user.id
+            #print(title, descr, priority)
+            Task.objects.create(title=title, descr=descr, priority=priority, user_id=user_id)
+            #print('after save')
+            return redirect('home')
+    else:
+        task_create_form = TaskCreateForm(instance=request.user)
+        print('else')
+    return render(request, 'ToDo/create_task.html', {'task_create_form': task_create_form, 'menu': home_menu})
+
+
+class TaskEdit(UpdateView):
+    model = Task
+    fields = ['title', 'descr', 'priority', 'is_finished']
+    template_name = 'ToDo/task-edit.html'
+    success_url = reverse_lazy('home')
+
 
 @login_required
 def home(request):
-    return render(request, 'ToDo/home.html', {'menu': home_menu})
+    tasks = Task.objects.filter(user_id=request.user.id).order_by('created_at').reverse()
+    return render(request, 'ToDo/home.html', {'menu': home_menu, 'tasks':tasks})
 
 
 def get_user_edit(request):

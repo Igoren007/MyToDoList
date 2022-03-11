@@ -1,9 +1,10 @@
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
-from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
 
 # представляет форму регистрации
-from ToDo.models import CustomUser
+from django.views.generic import UpdateView
+
+from ToDo.models import CustomUser, Task
 
 
 class RegisterCustomUserForm(UserCreationForm):
@@ -46,3 +47,38 @@ class CustomUserEditForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ('avatar', 'username', 'email', 'first_name', 'last_name', 'date_of_birth')
+
+
+class TaskCreateForm(forms.ModelForm):
+    """
+    Форма для создания новой задачи
+    """
+    PRIORITY_LEVEL = (('L', 'low'),
+                      ('H', 'hight'),
+                      ('M', 'medium'),
+                      )
+    title = forms.CharField(label='Задача', widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
+    descr = forms.CharField(label='Описание', widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
+    priority = forms.ChoiceField(label='Приоритет', choices=PRIORITY_LEVEL)
+
+    class Meta:
+        model = Task
+        fields = ('title', 'descr', 'priority')
+
+
+class TaskEditForm(UpdateView):
+    """
+    Форма для создания новой задачи
+    """
+    PRIORITY_LEVEL = (('L', 'low'),
+                      ('H', 'hight'),
+                      ('M', 'medium'),
+                      )
+    title = forms.CharField(label='Задача', widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
+    descr = forms.CharField(label='Описание', widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
+    priority = forms.ChoiceField(label='Приоритет', choices=PRIORITY_LEVEL)
+    is_finished = forms.BooleanField(label='Закончена?', widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
+
+    class Meta:
+        model = Task
+        fields = ('title', 'descr', 'priority', 'is_finished')

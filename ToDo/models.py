@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 # Create your models here.
+from MyToDoList import settings
 
 
 class CustomUser(AbstractUser):
@@ -20,7 +21,7 @@ class Task(models.Model):
                       ('M', 'medium'),
                       )
 
-    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=200)
     descr = models.CharField(max_length=500)
     priority = models.CharField(max_length=10, choices=PRIORITY_LEVEL, default='medium')
