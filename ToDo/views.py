@@ -6,6 +6,9 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView
 
 from ToDo.forms import LoginCustomUserForm, RegisterCustomUserForm, CustomUserEditForm, TaskCreateForm, TaskEditForm
+
+from ToDo.forms import LoginCustomUserForm, RegisterCustomUserForm, CustomUserEditForm, TaskCreateForm
+
 from ToDo.models import Task
 
 home_menu = {'current': 'Главная',
@@ -54,6 +57,7 @@ def create_task(request):
     return render(request, 'ToDo/create_task.html', {'task_create_form': task_create_form, 'menu': home_menu})
 
 
+
 class TaskEdit(UpdateView):
     model = Task
     fields = ['title', 'descr', 'priority', 'is_finished']
@@ -64,6 +68,13 @@ class TaskEdit(UpdateView):
 @login_required
 def home(request):
     tasks = Task.objects.filter(user_id=request.user.id).order_by('created_at').reverse()
+
+
+@login_required
+def home(request):
+    tasks = Task.objects.filter(user_id=request.user.id)
+    print(tasks)
+
     return render(request, 'ToDo/home.html', {'menu': home_menu, 'tasks':tasks})
 
 
@@ -102,3 +113,14 @@ class LoginUser(LoginView):
 
     def get_success_url(self):
         return reverse_lazy('home')
+
+
+# class TaskCreate(CreateView):
+#     form_class = TaskCreateForm
+#     template_name = 'ToDo/create_task.html'
+#     success_url = reverse_lazy('home')
+#
+#     def form_valid(self, form):
+#         form.instance.user_id = self.request.user.id
+#         return super(TaskCreate, self).form_valid(form)
+

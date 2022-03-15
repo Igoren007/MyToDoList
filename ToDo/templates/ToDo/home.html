@@ -12,8 +12,8 @@
             <div class="tasks__active">
                 {% for task in tasks %}
                     {% if not task.is_finished %}
-                        <div class="task">
-                            <div class="task__title {{ task.priority }}">
+                        <div class="task {{ task.priority }}">
+                            <div class="task__title">
                                 <a class="task__edit-link" href="{% url 'task-edit' task.id %}">{{ task.title }}</a>
                             </div>
                             <div class="task__descr">{{ task.descr }}</div>
@@ -31,15 +31,40 @@
             <div class="tasks__completed">
                 {% for task in tasks %}
                     {% if task.is_finished %}
-                        <div class="task">
-                            <div class="task__title {{ task.priority }}">{{ task.title }}</div>
+                        <div class="task {{ task.priority }}">
+                            <div class="task__title">{{ task.title }}</div>
                             <div class="task__descr">{{ task.descr }}</div>
                             <div class="task__created_at">{{ task.created_at }}</div>
                         </div>
                     {% endif %}
                 {% endfor %}
             </div>
-        </div>
+
+{#        <div class="tasks__active">#}
+{#            {% for task in tasks %}#}
+{#                {% if not task.is_finished %}#}
+{#                    <div class="task">#}
+{#                        <div class="task__title">{{ task.title }}</div>#}
+{#                        <div class="task__priority">{{ task.priority }}</div>#}
+{#                        <div class="task__descr">{{ task.descr }}</div>#}
+{#                        <div class="task__created_at">{{ task.created_at }}</div>#}
+{#                    </div>#}
+{#                {% endif %}#}
+{#            {% endfor %}#}
+{#        </div>#}
+{##}
+{#        <div class="tasks__completed">#}
+{#            {% for task in tasks %}#}
+{#                {% if task.is_finished %}#}
+{#                    <div class="task">#}
+{#                        <div class="task__title">{{ task.title }}</div>#}
+{#                        <div class="task__priority">{{ task.priority }}</div>#}
+{#                        <div class="task__descr">{{ task.descr }}</div>#}
+{#                        <div class="task__created_at">{{ task.created_at }}</div>#}
+{#                    </div>#}
+{#                {% endif %}#}
+{#            {% endfor %}#}
+{#        </div>#}
     </div>
 
 {% endblock %}

@@ -1,8 +1,9 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
 
-# представляет форму регистрации
+# представляет форпше му регистрации
 from django.views.generic import UpdateView
+
 
 from ToDo.models import CustomUser, Task
 
@@ -63,6 +64,7 @@ class TaskCreateForm(forms.ModelForm):
 
     class Meta:
         model = Task
+
         fields = ('title', 'descr', 'priority')
 
 
@@ -82,3 +84,6 @@ class TaskEditForm(UpdateView):
     class Meta:
         model = Task
         fields = ('title', 'descr', 'priority', 'is_finished')
+
+        fields = ('title', 'descr', 'priority')
+
