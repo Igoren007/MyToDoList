@@ -1,0 +1,24 @@
+{% extends 'ToDo/home_base.html' %}
+
+{% block rightbar %}
+    <div class="tasks__wrap">
+        <div class="tasks__active_wrap">
+            <div class="tasks__header">
+                <div class="tasks__active_title">Недавно выполненные задачи</div>
+                <div class="tasks__active_info">тут будет сортировка и тд</div>
+            </div>
+            <div class="tasks__active">
+                {% for task in tasks %}
+                    <div class="task {{ task.priority }}">
+                        <div class="task__title">
+                            <a class="task__edit-link" href="{% url 'task-edit' task.id %}">{{ task.title }}</a>
+                        </div>
+                        <div class="task__descr">{{ task.descr }}</div>
+                        <div class="task__created_at">{{ task.created_at|date:'d-m-Y H:i' }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

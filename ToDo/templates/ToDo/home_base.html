@@ -5,7 +5,7 @@
         <div  class="leftbar">
             <ul class="home_menu">
                 {% for key, item in menu.items %}
-                    <li class="home_menu__item"><a href="#">{{ item }}</a></li>
+                    <li class="home_menu__item"><a href="{% url key %}">{{ item }}</a></li>
                 {% endfor %}
             </ul>
         </div>

@@ -54,12 +54,12 @@ class TaskCreateForm(forms.ModelForm):
     """
     Форма для создания новой задачи
     """
-    PRIORITY_LEVEL = (('L', 'low'),
-                      ('H', 'hight'),
-                      ('M', 'medium'),
+    PRIORITY_LEVEL = (('L', 'низкий'),
+                      ('H', 'высокий'),
+                      ('M', 'обычный'),
                       )
-    title = forms.CharField(label='Задача', widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
-    descr = forms.CharField(label='Описание', widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
+    title = forms.CharField(label='Заголовок', widget=forms.TextInput(attrs={'class': 'create__task-input'}))
+    descr = forms.CharField(label='Краткое описание', widget=forms.Textarea(attrs={'class': 'create__task-input-textarea'}))
     priority = forms.ChoiceField(label='Приоритет', choices=PRIORITY_LEVEL)
 
     class Meta:

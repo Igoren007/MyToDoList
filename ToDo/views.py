@@ -11,9 +11,9 @@ from ToDo.forms import LoginCustomUserForm, RegisterCustomUserForm, CustomUserEd
 
 from ToDo.models import Task
 
-home_menu = {'current': 'Главная',
-             'done': 'Выполненные',
-             'statistic': 'Статистика'
+home_menu = {'home': 'Главная',
+             'done_tasks': 'Выполненные',
+             #'statistic': 'Статистика'
              }
 
 
@@ -33,7 +33,7 @@ def logout_user(request):
     logout(request)
     return redirect('login')
 
-
+@login_required
 def create_task(request):
     """
         Создание новой задачи
@@ -66,15 +66,24 @@ class TaskEdit(UpdateView):
 
 
 @login_required
-def home(request):
-    tasks = Task.objects.filter(user_id=request.user.id).order_by('created_at').reverse()
+def done_tasks(request):
+    tasks = Task.objects.filter(user_id=request.user.id, is_finished=True).order_by('created_at').reverse()
+    return render(request, 'ToDo/done_tasks.html', {'menu': home_menu, 'tasks': tasks})
 
+
+def task_delete(request, pk):
+    Task.objects.filter(user_id=request.user.id, id=pk).delete()
+    return redirect('home')
+
+
+def task_make_done(request, pk):
+    Task.objects.filter(user_id=request.user.id, id=pk).update(is_finished=True)
+    return redirect('home')
 
 @login_required
 def home(request):
-    tasks = Task.objects.filter(user_id=request.user.id)
+    tasks = Task.objects.filter(user_id=request.user.id).order_by('created_at').reverse()
     print(tasks)
-
     return render(request, 'ToDo/home.html', {'menu': home_menu, 'tasks':tasks})
 
 

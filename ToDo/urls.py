@@ -9,5 +9,8 @@ urlpatterns = [
     path('logout/', logout_user, name='logout'),
     path('user_settings/', get_user_edit, name='user_settings'),
     path('create_task/', create_task, name='create_task'),
+    path('done_tasks/', done_tasks, name='done_tasks'),
     path('task-edit/<int:pk>', TaskEdit.as_view(), name='task-edit'),
+    path('task_delete/<int:pk>', task_delete, name='task_delete'),
+    path('task_make_done/<int:pk>', task_make_done, name='task_make_done'),
 ]
