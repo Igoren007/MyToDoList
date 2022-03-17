@@ -371,3 +371,44 @@ font-size: 20px;
     text-decoration: none;
     color: black;
 }
+
+#delete, #done {
+    margin-top: 100px;
+    background-color: #7FFFD4;
+    border-radius: 4px;
+    padding: 10px;
+    height: 100px;
+    width: 350px;
+    z-index: 10;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+#delete p, #done p {
+    text-align: center;
+}
+
+#delete div, #done div {
+    display: flex;
+    justify-content: center;
+}
+
+#delete div a, #done div a {
+    margin: 10px;
+    background-color: #DC143C;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+#delete div a:hover, #done div a:hover {
+        transform: scale(1.25);
+}
