@@ -79,15 +79,13 @@ body {
 
 .home_nav {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    padding: 10px 20px;
 }
 
 .home_info {
-    margin-top: 10px;
-    margin-right: 10px;
+
 }
-
-
 
 .login__wrapper {
     display: flex;
@@ -260,7 +258,7 @@ font-size: 20px;
 
 .tasks__header {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     background-color: #ADD8E6;
     padding: 10px 10px;
 }
@@ -280,6 +278,7 @@ font-size: 20px;
 
 .tasks__active_wrap {
     margin: 0 10px;
+    width: 100%;
 }
 
 .tasks__completed {
@@ -304,7 +303,7 @@ font-size: 20px;
 
 .task:hover, .task:focus {
   box-shadow:10px 10px 7px rgba(0,0,0,.7);
-  transform: scale(1.15);
+  transform: scale(1.05);
   position:relative;
   z-index:5;
 }

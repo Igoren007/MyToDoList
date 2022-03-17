@@ -12,6 +12,7 @@
 
         <div  class="rightbar">
             <div class="home_nav">
+                <div class="date">{{ date }}</div>
                 <div class="home_info">
                         {% if request.user.is_authenticated %}
                         <span>{{ user.first_name }} {{ user.last_name }}</span>

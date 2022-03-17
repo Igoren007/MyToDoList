@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
@@ -72,8 +74,11 @@ def done_tasks(request):
 
 
 def task_delete(request, pk):
-    Task.objects.filter(user_id=request.user.id, id=pk).delete()
-    return redirect('home')
+    try:
+        Task.objects.filter(user_id=request.user.id, id=pk).delete()
+        return redirect('home')
+    except:
+        return redirect('home')
 
 
 def task_make_done(request, pk):
@@ -83,8 +88,8 @@ def task_make_done(request, pk):
 @login_required
 def home(request):
     tasks = Task.objects.filter(user_id=request.user.id).order_by('created_at').reverse()
-    print(tasks)
-    return render(request, 'ToDo/home.html', {'menu': home_menu, 'tasks':tasks})
+    current_date = date.today().strftime("%A, %d %B %Y")
+    return render(request, 'ToDo/home.html', {'menu': home_menu, 'tasks':tasks, 'date':current_date})
 
 
 def get_user_edit(request):
