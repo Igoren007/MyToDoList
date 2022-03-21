@@ -10,27 +10,8 @@
             </div>
             <div class="tasks__active">
 
-
                 {% for task in tasks %}
                     {% if not task.is_finished %}
-
-                        {# Скрытый блок для подтверждения удаления задачи. Становится видимым при нажатии кнопки "Удалить"#}
-                        <div id="delete" style="display:none;">
-                            <p>Вы уверены, что хотите удалить задачу?</p>
-                            <div>
-                                <a href="{% url 'task_delete' task.id %}">Удалить</a>
-                                <a href="#" onclick="document.getElementById('delete').style.display='none'; return false;">Отмена</a>
-                            </div>
-                        </div>
-
-                        {# Скрытый блок для подтверждения выполнения задачи. Становится видимым при нажатии кнопки "Выполнено"#}
-                        <div id="done" style="display:none;">
-                            <p>Задача выполнена?</p>
-                            <div>
-                                <a href="{% url 'task_make_done' task.id %}">Да</a>
-                                <a href="#" onclick="document.getElementById('done').style.display='none'; return false;">Нет</a>
-                            </div>
-                        </div>
 
                         <div class="task {{ task.priority }}">
                             <div class="task__title">
@@ -38,8 +19,9 @@
                             </div>
                             <div class="task__descr">{{ task.descr }}</div>
                             <div class="task__created_at">{{ task.created_at|date:'d-m-Y H:i' }}</div>
-                            <a href="#"><img class="task__done_img" src="{% static 'ToDo/images/done.png' %}" alt="done task" onclick="document.getElementById('done').style.display='block'; return false;"></a>
-                            <a href="#"><img class="task__delete_img" src="{% static 'ToDo/images/delete.png' %}" alt="delete task" onclick="document.getElementById('delete').style.display='block'; return false;"></a>
+                            <a href="{% url 'task_make_done' task.id %}" onclick="return proverka();"><img class="task__done_img" src="{% static 'ToDo/images/done.png' %}" alt="done task"></a>
+                            <a href="{% url 'task_delete' task.id %}" onclick="return proverka();"><img class="task__delete_img" src="{% static 'ToDo/images/delete.png' %}" alt="delete task"></a>
+
                         </div>
                     {% endif %}
                 {% endfor %}
@@ -63,4 +45,13 @@
             </div>
     </div>
 
+    <script>
+        function proverka() {
+            if (confirm("Подтверждаете действие?")) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
 {% endblock %}
