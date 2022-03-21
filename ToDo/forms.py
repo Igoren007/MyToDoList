@@ -60,7 +60,7 @@ class TaskCreateForm(forms.ModelForm):
                       )
     title = forms.CharField(label='Заголовок', widget=forms.TextInput(attrs={'class': 'create__task-input'}))
     descr = forms.CharField(label='Краткое описание', widget=forms.Textarea(attrs={'class': 'create__task-input-textarea'}))
-    priority = forms.ChoiceField(label='Приоритет', choices=PRIORITY_LEVEL)
+    priority = forms.ChoiceField(label='Приоритет', choices=PRIORITY_LEVEL, widget=forms.RadioSelect(attrs={'class': 'sort__select'}))
 
     class Meta:
         model = Task
@@ -87,3 +87,10 @@ class TaskEditForm(UpdateView):
 
         fields = ('title', 'descr', 'priority')
 
+
+class TaskSort(forms.Form):
+    SORT_TYPE = (('date_new', 'сначала новые'),
+                 ('date_old', 'сначала старые'),
+                ('priority', 'по важности'),
+                )
+    sort = forms.ChoiceField(choices=SORT_TYPE)

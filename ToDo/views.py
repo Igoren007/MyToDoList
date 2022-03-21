@@ -1,3 +1,4 @@
+import datetime
 from datetime import date
 
 from django.contrib.auth import logout, login
@@ -7,7 +8,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView
 
-from ToDo.forms import LoginCustomUserForm, RegisterCustomUserForm, CustomUserEditForm, TaskCreateForm, TaskEditForm
+from ToDo.forms import LoginCustomUserForm, RegisterCustomUserForm, CustomUserEditForm, TaskCreateForm, TaskEditForm, \
+    TaskSort
 
 from ToDo.forms import LoginCustomUserForm, RegisterCustomUserForm, CustomUserEditForm, TaskCreateForm
 
@@ -82,14 +84,31 @@ def task_delete(request, pk):
 
 
 def task_make_done(request, pk):
-    Task.objects.filter(user_id=request.user.id, id=pk).update(is_finished=True)
+    #Task.objects.filter(user_id=request.user.id, id=pk).update(is_finished=True)
+    #Task.objects.filter(user_id=request.user.id, id=pk).update(complated_at=date.today().strftime("%d/%m/%y %H:%M"))
+    task = Task.objects.get(id=pk)
+    task.is_finished = True
+    task.save()
     return redirect('home')
+
 
 @login_required
 def home(request):
-    tasks = Task.objects.filter(user_id=request.user.id).order_by('created_at').reverse()
     current_date = date.today().strftime("%A, %d %B %Y")
-    return render(request, 'ToDo/home.html', {'menu': home_menu, 'tasks':tasks, 'date':current_date})
+    sort_form = TaskSort(request.POST)
+    tasks = Task.objects.filter(user_id=request.user.id)
+
+#сортируем задачи по разным критериям
+    if sort_form.is_valid():
+        needed_sort = sort_form.cleaned_data.get("sort")
+        if needed_sort == "date_new":
+            tasks = tasks.order_by("-created_at")
+        elif needed_sort == "date_old":
+            tasks = tasks.order_by("created_at")
+        elif needed_sort == "priority":
+            tasks = tasks.order_by("priority")
+
+    return render(request, 'ToDo/home.html', {'menu': home_menu, 'tasks_active':tasks, 'tasks_finished':tasks.order_by("-complated_at"), 'date':current_date, 'sort_form': sort_form})
 
 
 def get_user_edit(request):

@@ -6,11 +6,22 @@
         <div class="tasks__active_wrap">
             <div class="tasks__header">
                 <div class="tasks__active_title">Актуальные задачи</div>
-                <div class="tasks__active_info">тут будет сортировка и тд</div>
+
+                <div class="tasks__active_info">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-error">{{ task_create_form.non_field_errors }}</div>
+                        {% for field in sort_form %}
+                                {{ field }}
+                        {% endfor%}
+                        <input type="submit" class="sort__btn" value="Применить">
+                    </form>
+                </div>
+
             </div>
             <div class="tasks__active">
 
-                {% for task in tasks %}
+                {% for task in tasks_active %}
                     {% if not task.is_finished %}
 
                         <div class="task {{ task.priority }}">
@@ -33,7 +44,7 @@
                 <div class="tasks__active_title">Недавно выполненные</div>
             </div>
             <div class="tasks__completed">
-                {% for task in tasks %}
+                {% for task in tasks_finished %}
                     {% if task.is_finished %}
                         <div class="task {{ task.priority }}">
                             <div class="task__title">{{ task.title }}</div>

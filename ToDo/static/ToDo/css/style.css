@@ -371,3 +371,33 @@ font-size: 20px;
     text-decoration: none;
     color: black;
 }
+
+#id_sort {
+    cursor: pointer;
+    padding-left: 8px;
+    font-size: 14px;
+    border: 1px solid #d2d2d2;
+    border-radius: 4px;
+    color: #444;
+    width: 140px;
+    box-sizing: border-box;
+}
+
+#id_sort:hover {
+    border: 2px solid #4CAF50;;
+}
+
+.sort__btn {
+    cursor: pointer;
+    background-color: #a1d8b6; /* Green */
+    border: 2px solid #3e77aa;
+    color: #4d4b4b;
+    padding: 2px 3px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 4px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
