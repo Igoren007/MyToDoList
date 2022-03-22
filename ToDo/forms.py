@@ -68,24 +68,18 @@ class TaskCreateForm(forms.ModelForm):
         fields = ('title', 'descr', 'priority')
 
 
-class TaskEditForm(UpdateView):
+class TaskEditForm(forms.ModelForm):
     """
-    Форма для создания новой задачи
+    Форма для редактирования задачи
     """
-    PRIORITY_LEVEL = (('L', 'low'),
-                      ('H', 'hight'),
-                      ('M', 'medium'),
-                      )
-    title = forms.CharField(label='Задача', widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
-    descr = forms.CharField(label='Описание', widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
-    priority = forms.ChoiceField(label='Приоритет', choices=PRIORITY_LEVEL)
-    is_finished = forms.BooleanField(label='Закончена?', widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
-
     class Meta:
         model = Task
         fields = ('title', 'descr', 'priority', 'is_finished')
-
-        fields = ('title', 'descr', 'priority')
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'create__task-input'}),
+            'descr': forms.Textarea(attrs={'class': 'create__task-input-textarea'}),
+            'priority': forms.RadioSelect(attrs={'class': 'sort__select'})
+        }
 
 
 class TaskSort(forms.Form):

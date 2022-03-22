@@ -61,11 +61,10 @@ def create_task(request):
     return render(request, 'ToDo/create_task.html', {'task_create_form': task_create_form, 'menu': home_menu})
 
 
-
 class TaskEdit(UpdateView):
-    model = Task
-    fields = ['title', 'descr', 'priority', 'is_finished']
     template_name = 'ToDo/task-edit.html'
+    model = Task
+    form_class = TaskEditForm
     success_url = reverse_lazy('home')
 
 
