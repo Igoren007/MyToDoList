@@ -16,9 +16,9 @@ class CustomUser(AbstractUser):
 
 
 class Task(models.Model):
-    PRIORITY_LEVEL = (('L', 'low'),
-                      ('H', 'hight'),
-                      ('M', 'medium'),
+    PRIORITY_LEVEL = (('L', 'низкий'),
+                      ('M', 'обычный'),
+                      ('H', 'высокий'),
                       )
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)

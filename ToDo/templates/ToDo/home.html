@@ -6,7 +6,6 @@
         <div class="tasks__active_wrap">
             <div class="tasks__header">
                 <div class="tasks__active_title">Актуальные задачи</div>
-
                 <div class="tasks__active_info">
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
@@ -26,7 +25,7 @@
 
                         <div class="task {{ task.priority }}">
                             <div class="task__title">
-                                <a class="task__edit-link" href="{% url 'task-edit' task.id %}">{{ task.title }}</a>
+                                <a class="task__edit-link" href="{% url 'task-edit' task.id %}" title="Редактировать">{{ task.title }}</a>
                             </div>
                             <div class="task__descr">{{ task.descr }}</div>
                             <div class="task__created_at">{{ task.created_at|date:'d-m-Y H:i' }}</div>

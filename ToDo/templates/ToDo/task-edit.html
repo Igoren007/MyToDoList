@@ -1,11 +1,18 @@
 {% extends 'ToDo/home_base.html' %}
 
 {% block rightbar %}
-Изменить задачу
-    <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-error">{{ form.non_field_errors }}</div>
-                {{ form.as_p }}
-                <input type="submit" class="" value="Сохранить">
-            </form>
+    <div class="create__task-form">
+        <div class="create__task-title">Изменить задачу</div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-error">{{ task_create_form.non_field_errors }}</div>
+            {% for field in form %}
+                <p>
+                    <div>{{ field.label }}</div>
+                    <div>{{ field }}</div>
+                </p>
+            {% endfor%}
+            <input type="submit" class="create__task-btn mini" value="Сохранить">
+        </form>
+    </div>
 {% endblock %}

@@ -17,7 +17,7 @@ from ToDo.models import Task
 
 home_menu = {'home': 'Главная',
              'done_tasks': 'Выполненные',
-             #'statistic': 'Статистика'
+             'statistic': 'Статистика'
              }
 
 
@@ -66,6 +66,12 @@ class TaskEdit(UpdateView):
     model = Task
     form_class = TaskEditForm
     success_url = reverse_lazy('home')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = home_menu
+        context['title'] = 'Редактирование задачи'
+        return context
 
 
 @login_required
@@ -147,12 +153,5 @@ class LoginUser(LoginView):
         return reverse_lazy('home')
 
 
-# class TaskCreate(CreateView):
-#     form_class = TaskCreateForm
-#     template_name = 'ToDo/create_task.html'
-#     success_url = reverse_lazy('home')
-#
-#     def form_valid(self, form):
-#         form.instance.user_id = self.request.user.id
-#         return super(TaskCreate, self).form_valid(form)
-
+def statistic(request):
+    return render(request, 'ToDo/statistic.html', {'menu': home_menu})

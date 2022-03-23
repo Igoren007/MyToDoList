@@ -13,4 +13,5 @@ urlpatterns = [
     path('task-edit/<int:pk>', TaskEdit.as_view(), name='task-edit'),
     path('task_delete/<int:pk>', task_delete, name='task_delete'),
     path('task_make_done/<int:pk>', task_make_done, name='task_make_done'),
+    path('statistic/', statistic, name='statistic'),
 ]

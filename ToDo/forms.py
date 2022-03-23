@@ -55,16 +55,15 @@ class TaskCreateForm(forms.ModelForm):
     Форма для создания новой задачи
     """
     PRIORITY_LEVEL = (('L', 'низкий'),
-                      ('H', 'высокий'),
                       ('M', 'обычный'),
+                      ('H', 'высокий'),
                       )
     title = forms.CharField(label='Заголовок', widget=forms.TextInput(attrs={'class': 'create__task-input'}))
-    descr = forms.CharField(label='Краткое описание', widget=forms.Textarea(attrs={'class': 'create__task-input-textarea'}))
+    descr = forms.CharField(label='Описание задачи', widget=forms.Textarea(attrs={'class': 'create__task-input-textarea'}))
     priority = forms.ChoiceField(label='Приоритет', choices=PRIORITY_LEVEL, widget=forms.RadioSelect(attrs={'class': 'sort__select'}))
 
     class Meta:
         model = Task
-
         fields = ('title', 'descr', 'priority')
 
 
@@ -79,6 +78,12 @@ class TaskEditForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'create__task-input'}),
             'descr': forms.Textarea(attrs={'class': 'create__task-input-textarea'}),
             'priority': forms.RadioSelect(attrs={'class': 'sort__select'})
+        }
+        labels = {
+            'title': 'Заголовок',
+            'descr': 'Описание задачи',
+            'priority': 'Приоритет',
+            'is_finished': 'Пометить как выполненную'
         }
 
 
