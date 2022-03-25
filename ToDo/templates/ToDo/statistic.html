@@ -1,7 +1,40 @@
 {% extends 'ToDo/home_base.html' %}
 {% load static %}
 {% block rightbar %}
-   страница статистики
 
+    <div class="statistic__wrap">
+        <div class="tasks__header">
+            <div class="tasks__active_title">Страница статистики</div>
+            <div class="tasks__active_info">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-error">{{ task_create_form.non_field_errors }}</div>
+                    {{ date_form.start_date }}
+                    {{ date_form.end_date }}
+                    <input type="submit" class="sort__btn" value="Применить">
+                </form>
+            </div>
+        </div>
+        <div class="stat__data">
+            <div>Всего выполнено: {{ all }}</div>
+        </div>
+
+    </div>
+
+
+    <script>
+      $(function () {
+        $("#id_start_date").datetimepicker({
+          value: Date(),
+          format: 'd/m/Y',
+          timepicker:false,
+        });
+        $("#id_end_date").datetimepicker({
+          value: Date(),
+          format: 'd/m/Y',
+          timepicker:false,
+        });
+      });
+    </script>
 
 {% endblock %}

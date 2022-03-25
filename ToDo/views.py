@@ -9,7 +9,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView
 
 from ToDo.forms import LoginCustomUserForm, RegisterCustomUserForm, CustomUserEditForm, TaskCreateForm, TaskEditForm, \
-    TaskSort
+    TaskSort, DatePeriodForm
 
 from ToDo.forms import LoginCustomUserForm, RegisterCustomUserForm, CustomUserEditForm, TaskCreateForm
 
@@ -154,4 +154,11 @@ class LoginUser(LoginView):
 
 
 def statistic(request):
-    return render(request, 'ToDo/statistic.html', {'menu': home_menu})
+    all = len(Task.objects.filter(user_id=request.user.id, is_finished=True))
+    date_form = DatePeriodForm(request.POST)
+    if date_form.is_valid():
+        start_date = date_form.cleaned_data.get("start_date")
+        end_date = date_form.cleaned_data.get("end_date")
+        print(start_date, end_date)
+
+    return render(request, 'ToDo/statistic.html', {'menu': home_menu, 'all': all, 'date_form':date_form})

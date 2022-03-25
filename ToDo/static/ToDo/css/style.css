@@ -31,7 +31,7 @@ body {
 }
 
 .leftbar {
-    width: 15%;
+    width: 10%;
     min-width: 200px;
     background-color: #484848;
     display: flex;
@@ -40,7 +40,7 @@ body {
 }
 
 .rightbar {
-    width: 85%;
+    width: 90%;
     background-color: #D5D8DC;
     min-height: 100vh;
 }
@@ -400,4 +400,8 @@ font-size: 20px;
     border-radius: 4px;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
+}
+
+.statistic__wrap {
+    padding: 0 30px;
 }

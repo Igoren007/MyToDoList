@@ -93,3 +93,10 @@ class TaskSort(forms.Form):
                 ('priority', 'по важности'),
                 )
     sort = forms.ChoiceField(choices=SORT_TYPE)
+
+
+class DatePeriodForm(forms.Form):
+    start_date = forms.DateTimeField(input_formats=['%d/%m/%Y'])
+    end_date = forms.DateTimeField(input_formats=['%d/%m/%Y'])
+
+    fields = ('start_date', 'end_date')
