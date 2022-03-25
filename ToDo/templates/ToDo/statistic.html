@@ -16,7 +16,10 @@
             </div>
         </div>
         <div class="stat__data">
-            <div>Всего выполнено: {{ all }}</div>
+            {% if data %}
+                <div class="stat__data-item">Всего поставлено задач: {{ data.all }}</div>
+                <div class="stat__data-item">Всего выполнено: {{ data.finished }}</div>
+            {% endif %}
         </div>
 
     </div>

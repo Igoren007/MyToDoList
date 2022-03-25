@@ -154,11 +154,26 @@ class LoginUser(LoginView):
 
 
 def statistic(request):
-    all = len(Task.objects.filter(user_id=request.user.id, is_finished=True))
+    #all = len(Task.objects.filter(user_id=request.user.id, is_finished=True))
+    data = dict()
     date_form = DatePeriodForm(request.POST)
+    context = {
+        'menu': home_menu,
+        'date_form': date_form
+    }
     if date_form.is_valid():
         start_date = date_form.cleaned_data.get("start_date")
         end_date = date_form.cleaned_data.get("end_date")
-        print(start_date, end_date)
+        #прибавляем end_date 1439 мин чтобы установить значение времени в 23:59 текущего дня
+        end_date += datetime.timedelta(minutes=1439)
+        #выбираем из БД все задачи за указанный промежуток времени
+        all_tasks = Task.objects.filter(user_id=request.user.id, created_at__gte=start_date, created_at__lte=end_date)
+        finished_tasks = 0
+        for task in all_tasks:
+            if task.is_finished == True:
+                finished_tasks += 1
+        data['all'] = len(all_tasks)
+        data['finished'] = finished_tasks
+        context['data'] = data
 
-    return render(request, 'ToDo/statistic.html', {'menu': home_menu, 'all': all, 'date_form':date_form})
+    return render(request, 'ToDo/statistic.html', context=context)
