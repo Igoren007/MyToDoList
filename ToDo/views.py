@@ -1,4 +1,5 @@
 import datetime
+import pandas as pd
 from datetime import date
 
 from django.contrib.auth import logout, login
@@ -166,14 +167,32 @@ def statistic(request):
         end_date = date_form.cleaned_data.get("end_date")
         #прибавляем end_date 1439 мин чтобы установить значение времени в 23:59 текущего дня
         end_date += datetime.timedelta(minutes=1439)
+
         #выбираем из БД все задачи за указанный промежуток времени
-        all_tasks = Task.objects.filter(user_id=request.user.id, created_at__gte=start_date, created_at__lte=end_date)
-        finished_tasks = 0
+        all_tasks = Task.objects.values('is_finished', 'complated_at').filter(user_id=request.user.id, complated_at__gte=start_date, complated_at__lte=end_date)
+
+#отбираем только выполненные задачи и в графе complated_at оставляем только день-месяц-год
+        finished_tasks = []
         for task in all_tasks:
-            if task.is_finished == True:
-                finished_tasks += 1
+            if task['is_finished'] == True:
+                task['complated_at'] = task['complated_at'].strftime("%d %m %Y")
+                finished_tasks.append(task)
+
+#используя pandas делаем группировку выполненных задач по дате и считаем их кол-во. формируем набор данных для графика.
+        df = pd.DataFrame(finished_tasks)
+        #print(df)
+        df2 = df.groupby('complated_at').size().reset_index(name='Count')
+        #print(df2)
+        x_axis = df2.complated_at.to_list()
+        y_axis = df2.Count.to_list()
+        #print(x_axis, y_axis)
+
         data['all'] = len(all_tasks)
-        data['finished'] = finished_tasks
+        data['finished'] = len(finished_tasks)
+        data['percent'] = int(100*len(finished_tasks)/len(all_tasks))
+
         context['data'] = data
+        context['x_axis'] = x_axis
+        context['y_axis'] = y_axis
 
     return render(request, 'ToDo/statistic.html', context=context)

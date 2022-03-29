@@ -5,7 +5,9 @@
         <div  class="leftbar">
             <ul class="home_menu">
                 {% for key, item in menu.items %}
-                    <li class="home_menu__item"><a href="{% url key %}">{{ item }}</a></li>
+{#                    для выделения активного пункта меню#}
+                    {% url key as url %}
+                    <li class="home_menu__item {% if request.path == url %}active{%endif %}"><a href="{% url key %}">{{ item }}</a></li>
                 {% endfor %}
             </ul>
         </div>
@@ -14,10 +16,10 @@
             <div class="home_nav">
                 <div class="date">{{ date }}</div>
                 <div class="home_info">
-                        {% if request.user.is_authenticated %}
+                    {% if request.user.is_authenticated %}
                         <span>{{ user.first_name }} {{ user.last_name }}</span>
                         <a href="{% url 'user_settings' %}">
-                            <img class="settings__icon" src="{% static 'ToDo/images/settings.png' %}" alt="settings">
+                            <img class="settings__icon" src="{% static 'ToDo/images/setting.png' %}" alt="settings">
                         </a>
                         <a href="{% url 'logout' %}">Выйти</a>
                     {% endif %}

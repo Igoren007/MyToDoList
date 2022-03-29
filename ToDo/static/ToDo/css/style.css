@@ -50,8 +50,8 @@ body {
 }
 
 .settings__icon {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
 }
 
 .user_settings__title {
@@ -69,12 +69,17 @@ body {
 .home_menu__item {
     list-style-type: none;
     margin-bottom: 10px;
+    display: block;
 }
 
 .home_menu__item a {
     text-decoration: none;
     color: white;
     list-style-type: none;
+}
+
+.active a {
+    color: yellow;
 }
 
 .home_nav {
@@ -405,3 +410,9 @@ font-size: 20px;
 .statistic__wrap {
     padding: 0 30px;
 }
+
+.chart {
+    width: 400px;
+    height: 300px;
+}
+
