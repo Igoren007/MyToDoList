@@ -211,21 +211,18 @@ def statistic(request):
                 task['complated_at'] = task['complated_at'].strftime("%d %m %Y")
                 finished_tasks.append(task)
 
-#используя pandas делаем группировку выполненных задач по дате и считаем их кол-во. формируем набор данных для графика.
-        df = pd.DataFrame(finished_tasks)
-        #print(df)
-        df2 = df.groupby('complated_at').size().reset_index(name='Count')
-        #print(df2)
-        x_axis = df2.complated_at.to_list()
-        y_axis = df2.Count.to_list()
-        #print(x_axis, y_axis)
+        if finished_tasks:
+            #используя pandas делаем группировку выполненных задач по дате и считаем их кол-во. формируем набор данных для графика.
+            df = pd.DataFrame(finished_tasks)
+            df2 = df.groupby('complated_at').size().reset_index(name='Count')
+            x_axis = df2.complated_at.to_list()
+            y_axis = df2.Count.to_list()
+            context['x_axis'] = x_axis
+            context['y_axis'] = y_axis
 
         data['all'] = len(all_tasks)
         data['finished'] = len(finished_tasks)
         data['percent'] = int(100*len(finished_tasks)/len(all_tasks))
 
         context['data'] = data
-        context['x_axis'] = x_axis
-        context['y_axis'] = y_axis
-
     return render(request, 'ToDo/statistic.html', context=context)
