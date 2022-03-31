@@ -26,17 +26,10 @@ def index(request):
     return render(request, 'ToDo/index.html')
 
 
-# def login(request):
-#     return render(request, 'ToDo/login.html')
-
-
-# def register(request):
-#     return render(request, 'ToDo/register.html')
-
-
 def logout_user(request):
     logout(request)
     return redirect('login')
+
 
 @login_required
 def create_task(request):
@@ -46,20 +39,21 @@ def create_task(request):
     if request.POST:
         task_create_form = TaskCreateForm(request.POST, instance=request.user)
         if task_create_form.is_valid():
-            #task_create_form.instance.user_id = request.user.id
-            #task_create_form.save()
             title = request.POST['title']
             descr = request.POST['descr']
             priority = request.POST['priority']
             user_id = request.user.id
-            #print(title, descr, priority)
             Task.objects.create(title=title, descr=descr, priority=priority, user_id=user_id)
-            #print('after save')
             return redirect('home')
     else:
         task_create_form = TaskCreateForm(instance=request.user)
-        print('else')
-    return render(request, 'ToDo/create_task.html', {'task_create_form': task_create_form, 'menu': home_menu})
+
+    context = {
+        'task_create_form': task_create_form,
+        'menu': home_menu,
+        'title': 'Создание задачи'
+    }
+    return render(request, 'ToDo/create_task.html', context=context)
 
 
 class TaskEdit(UpdateView):
@@ -77,11 +71,25 @@ class TaskEdit(UpdateView):
 
 @login_required
 def done_tasks(request):
+    """
+        Старница отображения выполненных задач
+    """
     tasks = Task.objects.filter(user_id=request.user.id, is_finished=True).order_by('created_at').reverse()
-    return render(request, 'ToDo/done_tasks.html', {'menu': home_menu, 'tasks': tasks})
+    context = {
+        'tasks': tasks,
+        'menu': home_menu,
+        'title': 'Выполненные задачи'
+    }
+    return render(request, 'ToDo/done_tasks.html', context=context)
 
 
+@login_required
 def task_delete(request, pk):
+    """
+        Функция удаления задач.
+        В шаблоне home.html на задаче есть ссылка с href="{% url 'task_delete' task.id %}"
+        По нажатию на нее сюда передается url в виде task_delete/task.id
+    """
     try:
         Task.objects.filter(user_id=request.user.id, id=pk).delete()
         return redirect('home')
@@ -89,17 +97,27 @@ def task_delete(request, pk):
         return redirect('home')
 
 
+@login_required
 def task_make_done(request, pk):
-    #Task.objects.filter(user_id=request.user.id, id=pk).update(is_finished=True)
-    #Task.objects.filter(user_id=request.user.id, id=pk).update(complated_at=date.today().strftime("%d/%m/%y %H:%M"))
-    task = Task.objects.get(id=pk)
-    task.is_finished = True
-    task.save()
-    return redirect('home')
+    """
+        Функция изменения статуса задачи на "выполнено".
+        В шаблоне home.html на задаче есть ссылка с href="{% url 'task_make_done' task.id %}"
+        По нажатию на нее сюда передается url в виде task_make_done/task.id
+    """
+    try:
+        task = Task.objects.get(id=pk)
+        task.is_finished = True
+        task.save()
+        return redirect('home')
+    except:
+        return redirect('home')
 
 
 @login_required
 def home(request):
+    """
+        Домашняя страница пользователя.
+    """
     current_date = date.today().strftime("%A, %d %B %Y")
     sort_form = TaskSort(request.POST)
     tasks = Task.objects.filter(user_id=request.user.id)
@@ -114,12 +132,21 @@ def home(request):
         elif needed_sort == "priority":
             tasks = tasks.order_by("priority")
 
-    return render(request, 'ToDo/home.html', {'menu': home_menu, 'tasks_active':tasks, 'tasks_finished':tasks.order_by("-complated_at"), 'date':current_date, 'sort_form': sort_form})
+    context = {
+        'menu': home_menu,
+        'tasks_active': tasks,
+        'tasks_finished': tasks.order_by("-complated_at")[:5],
+        'date': current_date,
+        'sort_form': sort_form,
+        'title': 'Домашняя страница'
+    }
+    return render(request, 'ToDo/home.html', context=context)
 
 
+@login_required
 def get_user_edit(request):
     """
-    Изменение данных пользователя
+    Страница редактирования данных пользователя
     """
     if request.POST:
         user_edit_form = CustomUserEditForm(request.POST, request.FILES, instance=request.user)
@@ -128,7 +155,13 @@ def get_user_edit(request):
             return redirect('user_settings')
     else:
         user_edit_form = CustomUserEditForm(instance=request.user)
-    return render(request, 'ToDo/user_settings.html', {'user_edit_form': user_edit_form, 'menu': home_menu})
+
+    context = {
+        'user_edit_form': user_edit_form,
+        'menu': home_menu,
+        'title': 'Редактирование данных пользователя'
+    }
+    return render(request, 'ToDo/user_settings.html', context=context)
 
 
 class RegisterUser(CreateView):
@@ -153,14 +186,14 @@ class LoginUser(LoginView):
     def get_success_url(self):
         return reverse_lazy('home')
 
-
+@login_required
 def statistic(request):
-    #all = len(Task.objects.filter(user_id=request.user.id, is_finished=True))
     data = dict()
     date_form = DatePeriodForm(request.POST)
     context = {
         'menu': home_menu,
-        'date_form': date_form
+        'date_form': date_form,
+        'title': 'Статистика'
     }
     if date_form.is_valid():
         start_date = date_form.cleaned_data.get("start_date")
