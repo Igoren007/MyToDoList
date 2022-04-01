@@ -18,7 +18,8 @@ from ToDo.models import Task
 
 home_menu = {'home': 'Главная',
              'done_tasks': 'Выполненные',
-             'statistic': 'Статистика'
+             'statistic': 'Статистика',
+             'about': 'Справка',
              }
 
 
@@ -226,3 +227,12 @@ def statistic(request):
 
         context['data'] = data
     return render(request, 'ToDo/statistic.html', context=context)
+
+
+@login_required
+def about(request):
+    context = {
+        'title': 'Справка',
+        'menu': home_menu
+    }
+    return render(request, 'ToDo/about.html', context=context)
