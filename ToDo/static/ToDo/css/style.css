@@ -101,6 +101,24 @@ body {
     align-items: center;     /*Центрирование по вертикали */
 }
 
+.login__btn {
+    margin: 20px;
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border: 2px solid black;
+    border-radius: 2px;
+}
+.login__btn-red {
+    background-color: #f44336;
+}
+
+
 .login-page {
   width: 360px;
   padding: 8% 0 0;
