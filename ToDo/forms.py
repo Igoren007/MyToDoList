@@ -43,7 +43,7 @@ class CustomUserEditForm(forms.ModelForm):
     email = forms.EmailField(label='Эл. почта', widget=forms.EmailInput(attrs={'class': 'user_settings__input'}))
     first_name = forms.CharField(label='Имя', widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
     last_name = forms.CharField(label='Фамилия', widget=forms.TextInput(attrs={'class': 'user_settings__input'}))
-    date_of_birth = forms.DateField(label='Дата рождения', widget=forms.DateInput(attrs={'class': 'user_settings__input'}))
+    date_of_birth = forms.DateField(label='Дата рождения', widget=forms.DateInput(attrs={'class': 'user_settings__input', 'placeholder': '1999-12-30'}))
 
     class Meta:
         model = CustomUser
