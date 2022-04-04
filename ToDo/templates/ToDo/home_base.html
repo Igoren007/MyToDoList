@@ -7,7 +7,9 @@
                 {% for key, item in menu.items %}
 {#                    для выделения активного пункта меню#}
                     {% url key as url %}
-                    <li class="home_menu__item {% if request.path == url %}active{%endif %}"><a href="{% url key %}">{{ item }}</a></li>
+                    <li class="home_menu__item {% if request.path == url %}active{%endif %}">
+                        <a href="{% url key %}">{{ item }}</a>
+                    </li>
                 {% endfor %}
             </ul>
         </div>

@@ -1,5 +1,13 @@
 html {
     font-family: 'Roboto', sans-serif;
+    background-image: url(../images/index_background.webp);
+    background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 body {
@@ -96,10 +104,28 @@ body {
 
 .login__wrapper {
     display: flex;
-    margin-top: 30vh;
+    margin-top: 100px;
     justify-content: center; /*Центрирование по горизонтали*/
     align-items: center;     /*Центрирование по вертикали */
 }
+
+.login__btn {
+    margin: 20px;
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border: 1px solid black;
+    border-radius: 2px;
+}
+.login__btn-red {
+    background-color: #f44336;
+}
+
 
 .login-page {
   width: 360px;
@@ -299,7 +325,7 @@ font-size: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 250px;
+    width: 200px;
     word-wrap: break-word;
     margin: 10px;
     height: auto;
@@ -418,3 +444,24 @@ font-size: 20px;
     height: 300px;
 }
 
+.index__title {
+    padding-top: 150px;
+    font-size: 34px;
+    text-align: center;
+    color: black;
+}
+
+.index__subtitle {
+    padding-top: 50px;
+    font-size: 26px;
+    text-align: center;
+    color: black;
+}
+
+.footer {
+    display: block;
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+}

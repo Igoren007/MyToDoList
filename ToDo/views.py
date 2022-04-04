@@ -18,7 +18,8 @@ from ToDo.models import Task
 
 home_menu = {'home': 'Главная',
              'done_tasks': 'Выполненные',
-             'statistic': 'Статистика'
+             'statistic': 'Статистика',
+             'about': 'Справка',
              }
 
 
@@ -220,9 +221,27 @@ def statistic(request):
             context['x_axis'] = x_axis
             context['y_axis'] = y_axis
 
+        if all_tasks:
+            data['percent'] = int(100 * len(finished_tasks) / len(all_tasks))
+        else:
+            data['percent'] = '0 %'
+
         data['all'] = len(all_tasks)
         data['finished'] = len(finished_tasks)
-        data['percent'] = int(100*len(finished_tasks)/len(all_tasks))
 
         context['data'] = data
     return render(request, 'ToDo/statistic.html', context=context)
+
+
+@login_required
+def about(request):
+    context = {
+        'title': 'Справка',
+        'menu': home_menu
+    }
+    return render(request, 'ToDo/about.html', context=context)
+
+
+def page_not_found(request, exception):
+    return render(request, 'ToDo/page404.html', status=404)
+

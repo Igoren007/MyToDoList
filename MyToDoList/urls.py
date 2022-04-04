@@ -19,11 +19,14 @@ from django.urls import path, include
 
 from MyToDoList import settings
 from ToDo import urls
+from ToDo.views import page_not_found
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(urls))
 ]
+
+handler404 = page_not_found
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

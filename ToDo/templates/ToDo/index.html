@@ -3,10 +3,11 @@
 {% block content %}
 
 <div class="container">
-    <h1>Главная страница</h1>
+    <div class="index__title">Бесплатное приложение для ведения списков рабочих дел в сети</div>
+    <div class="index__subtitle">Здесь вы легко сможете планировать свою работу</div>
     <div class="login__wrapper">
-        <a class="login__btn" href="{% url 'login' %}">Войти |</a>
-        <a class="login__btn" href="{% url 'register' %}">Регистрация</a>
+        <a class="login__btn" href="{% url 'login' %}">Войти</a>
+        <a class="login__btn login__btn-red" href="{% url 'register' %}">Регистрация</a>
     </div>
 </div>
 {% endblock %}
