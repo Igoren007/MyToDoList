@@ -120,6 +120,7 @@ body {
     display: inline-block;
     font-size: 16px;
     border: 1px solid black;
+    border: 2px solid black;
     border-radius: 2px;
 }
 .login__btn-red {
