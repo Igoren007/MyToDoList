@@ -1,1 +1,0 @@
-web: gunicorn MyToDoList.wsgi --log-file -

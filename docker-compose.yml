@@ -1,0 +1,39 @@
+version: "3.6"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    depends_on:
+      - db
+    container_name: todolist-app
+    env_file:
+      - ./.env_app
+    volumes:
+      - ./log:/var/log/container
+    ports:
+      - 80:8000
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 100M
+
+
+  db:
+    image: postgres:13
+    restart: always
+    container_name: todolist-db
+    ports:
+      - 5432:5432
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 50M
+    env_file:
+      - ./.env_db
+    volumes:
+      - ./db:/var/lib/postgresql/data
+
