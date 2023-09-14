@@ -1,6 +1,8 @@
 import datetime
+import pika
 import pandas as pd
 from datetime import date
+import os
 
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
@@ -21,6 +23,17 @@ home_menu = {'home': 'Главная',
              'statistic': 'Статистика',
              'about': 'Справка',
              }
+
+
+def send_notify(channel_id, title, status):
+    rabbit_host = os.environ.get(os.environ.get("RABBIT_MQ_HOST"))
+    connection = pika.BlockingConnection(
+        pika.ConnectionParameters(host='localhost'))
+    channel = connection.channel()
+    channel.queue_declare(queue='tg_notify')
+    body = f"{channel_id}_{title}_{status}"
+    channel.basic_publish(exchange='', routing_key='tg_notify', body=body)
+    connection.close()
 
 
 def index(request):
@@ -45,6 +58,7 @@ def create_task(request):
             priority = request.POST['priority']
             user_id = request.user.id
             Task.objects.create(title=title, descr=descr, priority=priority, user_id=user_id)
+            send_notify(123, title, "created")
             return redirect('home')
     else:
         task_create_form = TaskCreateForm(instance=request.user)
@@ -109,6 +123,7 @@ def task_make_done(request, pk):
         task = Task.objects.get(id=pk)
         task.is_finished = True
         task.save()
+        send_notify(123, task.title, "is done")
         return redirect('home')
     except:
         return redirect('home')
