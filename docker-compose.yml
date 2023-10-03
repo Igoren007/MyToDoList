@@ -5,39 +5,52 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: python manage.py runserver 0.0.0.0:8000
-#    depends_on:
-#      - db
+#    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn MyToDoList.wsgi:application --bind 0.0.0.0:8000
     container_name: todolist-app
     env_file:
       - ./.env_app
     volumes:
       - ./logs:/var/log/container
     ports:
-      - 80:8000
-    network_mode: "host"
+      - 8000:8000
+#    network_mode: "host"
+    expose:
+      - 8000
+    depends_on:
+      - db
     deploy:
       resources:
         limits:
           cpus: '0.5'
           memory: 100M
 
+  load_balancer:
+    image: nginx
+    container_name: load_balancer
+    volumes:
+      - ./nginx/conf_lb:/etc/nginx/conf.d
+    ports:
+      - 1234:80
+#    network_mode: "host"
+    depends_on: 
+      - web
 
-#  db:
-#    image: postgres:13
-#    restart: always
-#    container_name: todolist-db
-#    ports:
-#      - 5432:5432
-#    deploy:
-#      resources:
-#        limits:
-#          cpus: '0.5'
-#          memory: 50M
-#    env_file:
-#      - ./.env_db
-#    volumes:
-#      - ./db:/var/lib/postgresql/data
+  db:
+    image: postgres:13
+    restart: always
+    container_name: todolist-db
+    ports:
+      - 5432:5432
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 50M
+    env_file:
+      - ./.env_db
+    volumes:
+      - ./db:/var/lib/postgresql/data
 
 #  rabbit:
 #    image: rabbitmq:3.10.7-management
