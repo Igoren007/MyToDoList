@@ -1,22 +1,22 @@
 version: "3.6"
 
 services:
-  web:
+  web1:
     build:
       context: .
       dockerfile: ./Dockerfile
 #    command: python manage.py runserver 0.0.0.0:8000
     command: gunicorn MyToDoList.wsgi:application --bind 0.0.0.0:8000
-    container_name: todolist-app
+    container_name: todolist-app-1
     env_file:
       - ./.env_app
     volumes:
       - ./logs:/var/log/container
     ports:
-      - 8000:8000
+      - 8001:8000
 #    network_mode: "host"
-    expose:
-      - 8000
+#    expose:
+#      - 8001
     depends_on:
       - db
     deploy:
@@ -24,6 +24,32 @@ services:
         limits:
           cpus: '0.5'
           memory: 100M
+
+
+  web2:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+#    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn MyToDoList.wsgi:application --bind 0.0.0.0:8000
+    container_name: todolist-app-2
+    env_file:
+      - ./.env_app
+    volumes:
+      - ./logs:/var/log/container
+    ports:
+      - 8002:8000
+#    network_mode: "host"
+#    expose:
+#      - 8002
+    depends_on:
+      - db
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 100M
+
 
   load_balancer:
     image: nginx
@@ -34,7 +60,8 @@ services:
       - 1234:80
 #    network_mode: "host"
     depends_on: 
-      - web
+      - web1
+      - web2
 
   db:
     image: postgres:13
