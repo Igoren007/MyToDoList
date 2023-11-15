@@ -23,6 +23,16 @@ services:
           memory: 100M
 
 
+  vector:
+    image: timberio/vector:0.34.0-debian
+    restart: always
+    volumes:
+      - ./vector.yml:/etc/vector/vector.yaml:ro
+    ports:
+      - 8686:8686
+    network_mode: "host"
+
+
 #  db:
 #    image: postgres:13
 #    restart: always

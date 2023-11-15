@@ -1,0 +1,30 @@
+# Set global options
+data_dir: "/var/lib/vector"
+
+sources:
+  file_logs:
+    type: "file"
+    include:
+      - "/var/log/container/*.log" # supports globbing
+
+transforms:
+  file_parser:
+    inputs:
+      - "file_logs"
+    type: "remap"
+    source: |-
+              parsed, err = parse_regex(.message,r'^(?P<timestamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d+) \[(?P<severity>[A-Za-z]+)\]')
+              if err == null { .unixts_ns=parsed.timestamp; .severity = parsed.severity
+              } else { .unixts_ns=format_timestamp!(now(),"%Y-%m-%d %H:%M:%S.%f"); .severity = "UNKNOWN"}
+
+sinks:
+#  kafka:
+  stdout:
+#    bootstrap_servers: 192.168.122.1:29092,192.168.122.1:29093
+    inputs:
+      - file_parser
+    encoding:
+      codec: json
+#    topic: logs
+#    type: kafka
+    type: console
