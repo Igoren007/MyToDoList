@@ -58,7 +58,7 @@ def create_task(request):
             priority = request.POST['priority']
             user_id = request.user.id
             Task.objects.create(title=title, descr=descr, priority=priority, user_id=user_id)
-            send_notify(123, title, "created")
+#            send_notify(123, title, "created")
             return redirect('home')
     else:
         task_create_form = TaskCreateForm(instance=request.user)
@@ -123,7 +123,7 @@ def task_make_done(request, pk):
         task = Task.objects.get(id=pk)
         task.is_finished = True
         task.save()
-        send_notify(123, task.title, "is done")
+#        send_notify(123, task.title, "is done")
         return redirect('home')
     except:
         return redirect('home')

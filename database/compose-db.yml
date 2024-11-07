@@ -2,10 +2,10 @@ version: "3.6"
 
 services:
   db:
-#    image: postgres:13
-    build:
-      context: .
-      dockerfile: ./Dockerfile
+    image: postgres:13
+#    build:
+#      context: .
+#      dockerfile: ./Dockerfile
     restart: always
     container_name: todolist-db
     ports:
@@ -20,4 +20,4 @@ services:
     volumes:
       - ./db:/var/lib/postgresql/data
       - /var/log/container/postgresql:/logs
-    command: postgres -c logging_collector=on -c log_destination=stderr -c log_directory=/logs
+#    command: postgres -c logging_collector=on -c log_destination=stderr -c log_directory=/logs

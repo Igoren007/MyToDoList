@@ -6,16 +6,17 @@ services:
       context: .
       dockerfile: ./Dockerfile
     command: python manage.py runserver 0.0.0.0:8000
-#    depends_on:
-#      - db
     container_name: todolist-app
     env_file:
       - ./.env_app
     volumes:
       - /var/log/container/todolist-app:/var/log/container
-    ports:
-      - 80:8000
-    network_mode: "host"
+#    ports:
+#      - 8000:8000
+#      - "127.0.0.1:8000:8000"
+#    expose:
+#      - 8000
+    network_mode: host
     deploy:
       resources:
         limits:
@@ -23,14 +24,14 @@ services:
           memory: 100M
 
 
-  vector:
-    image: timberio/vector:0.34.0-debian
-    restart: always
-    volumes:
-      - ./vector.yml:/etc/vector/vector.yaml:ro
-    ports:
-      - 8686:8686
-    network_mode: "host"
+#  vector:
+#    image: timberio/vector:0.34.0-debian
+#    restart: always
+#    volumes:
+#      - ./vector.yml:/etc/vector/vector.yaml:ro
+#    ports:
+#      - 8686:8686
+#    network_mode: "host"
 
 
 #  db:
@@ -60,10 +61,3 @@ services:
 #    ports:
 #      - 15672:15672
 #      - 5672:5672
-
-#  receiver:
-#    image: receiver
-#    container_name: rabbit_receiver
-#    restart: always
-#    depends_on:
-#      - rabbit
